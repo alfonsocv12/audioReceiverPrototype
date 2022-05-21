@@ -6,9 +6,17 @@ import soundcard as sc
 
 default_speaker = sc.default_speaker()
 
+def unpack_data(data):
+    frameBuffer = data
+    length_str, ignored, frameBuffer = frameBuffer.partition(b':')
+    length = int(length_str)
+
+    return np.load(BytesIO(frameBuffer))['frame']
+    
+
 async def echo(websocket):
     async for message in websocket:
-        data = np.frombuffer(message, dtype=np.float64)
+        data = unpack_data(message)
         with default_speaker.player(samplerate=44100, channels=[0, 1]) as sp:
             sp.play(data)
 
