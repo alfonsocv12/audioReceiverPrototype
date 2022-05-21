@@ -19,13 +19,12 @@ def pack_frame(frame):
     return out
 
 async def sender():
-    async with websockets.connect("ws://localhost:8765") as websocket:
+    async for websocket in  websockets.connect("ws://localhost:8765"):
         default_mic = sc.default_microphone()
 
         with default_mic.recorder(samplerate=44100, channels=[0, 1]) as mic:
             while True:
                 data = mic.record(numframes=44100)
-                print(data)
                 await websocket.send(pack_frame(data))
 
         # await websocket.send("hello world")
