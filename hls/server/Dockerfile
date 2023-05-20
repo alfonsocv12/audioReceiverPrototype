@@ -1,4 +1,3 @@
-FROM nginx:latest
+FROM tiangolo/nginx-rtmp
 
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./nginx/hls.conf /etc/nginx/hls.conf
