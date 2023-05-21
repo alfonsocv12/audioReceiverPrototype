@@ -1,2 +1,8 @@
 .vscode
 .build
+
+video-js*/
+
+public/
+
+hls/client/hls/
